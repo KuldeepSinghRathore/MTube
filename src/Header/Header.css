@@ -1,7 +1,60 @@
 .header{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding:10px 2%;
+    box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background-color: #fff;
+    
+
 }
 .header__logo{
-    height: 25px;
+    /* height: 25px;
+     */
+       font-weight: bold;
+    font-size: 1.7em;
+     /* width: 3.5em; */
+    object-fit: contain;
+    /* margin-left: 10px; */
+    color: gray;
+    
+}
+.header__avatar{
+    width: 2.5em;
+}
+.header__left{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header__middle{
+    display: flex;
+    align-items: center;
+    width: 40%;
+    min-width: 200px;
+    /* height: 40%; */
+    border: 1px solid lightgray;
+    /* padding: 5px; */
+    border-radius: 25px;
+}
+.header__middle > input{
+    flex: 5;
+    border:0;
+    /* outline: 0; */
+    outline: gray;
+    height: 27px;
+    border-radius: 25px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-left: 10px;
+}
+.header__searchButton{
+    flex: 1;
+ 
+    border: none;
+    color: gray;
+
 }

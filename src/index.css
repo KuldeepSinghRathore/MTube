@@ -1,5 +1,15 @@
+/* ::-webkit-scrollbar{
+    width: 0px;
+    background: transparent;
+}
+html{
+  scrollbar-width: none;
+} */
+
 *{
   margin: 0;
+padding: 0;
+box-sizing: border-box;
 
 }
 
