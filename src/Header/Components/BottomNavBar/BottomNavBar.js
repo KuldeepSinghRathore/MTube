@@ -2,12 +2,10 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import HomeIcon from "@mui/icons-material/Home"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
-import SearchIcon from "@mui/icons-material/Search"
-import FavoriteIcon from "@mui/icons-material/Favorite"
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
+
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined"
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary"
-import PageviewIcon from "@mui/icons-material/Pageview"
+
 import HistoryIcon from "@mui/icons-material/History"
 
 import "./BottomNavBar.css"
@@ -45,13 +43,13 @@ export const BottomNavBar = (props) => {
         )}
       </div>
       <div className="bn-tab">
-        {activeTabs === "search" ? (
+        {activeTabs === "history" ? (
           <HistoryIcon
             size="35"
             color="#000"
             className="color-icon"
             onClick={() => {
-              setActiveTabs("search")
+              setActiveTabs("history")
               navigate("history")
             }}
           />
@@ -60,19 +58,19 @@ export const BottomNavBar = (props) => {
             size="35"
             color="#000"
             onClick={() => {
-              setActiveTabs("search")
+              setActiveTabs("history")
               navigate("history")
             }}
           />
         )}
       </div>
       <div className="bn-tab">
-        {activeTabs === "favourites" ? (
+        {activeTabs === "playlists" ? (
           <Subscriptions
             size="35"
             className="color-icon"
             onClick={() => {
-              setActiveTabs("favourites")
+              setActiveTabs("playlists")
               navigate("playlists")
             }}
           />
@@ -81,21 +79,21 @@ export const BottomNavBar = (props) => {
             size="35"
             color="#000"
             onClick={() => {
-              setActiveTabs("favourites")
+              setActiveTabs("playlists")
               navigate("playlists")
             }}
           />
         )}
       </div>
       <div className="bn-tab">
-        {activeTabs === "account" ? (
+        {activeTabs === "library" ? (
           <VideoLibraryIcon
             size="35"
             color="#000"
             className="color-icon"
             onClick={() => {
-              setActiveTabs("account")
-              navigate("account")
+              setActiveTabs("library")
+              navigate("library")
             }}
           />
         ) : (
@@ -103,8 +101,8 @@ export const BottomNavBar = (props) => {
             size="35"
             color="#000"
             onClick={() => {
-              setActiveTabs("account")
-              navigate("account")
+              setActiveTabs("library")
+              navigate("library")
             }}
           />
         )}

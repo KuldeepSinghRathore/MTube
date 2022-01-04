@@ -1,10 +1,8 @@
 import React from "react"
-import VideoCard from "./Components/VideoCard/VideoCard"
-import VideoLibraryIcon from "@mui/icons-material/VideoLibrary"
-import ThumbUpIcon from "@mui/icons-material/ThumbUp"
+
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
-import { ThumbDownAlt } from "@mui/icons-material"
+
 import ThumbUpOffAltOutlinedIcon from "@mui/icons-material/ThumbUpOffAltOutlined"
 import "./SingleVideo.css"
 

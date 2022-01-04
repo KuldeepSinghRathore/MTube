@@ -1,5 +1,5 @@
 import { NavigateNext } from "@mui/icons-material"
-import React, { useEffect } from "react"
+import React from "react"
 import "./SelectBy.css"
 export const SelectBy = () => {
   return (
