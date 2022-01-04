@@ -38,4 +38,9 @@
         justify-content: center;
         flex: 0.8;
     }
+    .singleVideo_flex {
+    width: 80%;
+    /* display: flex; */
+    margin: 0 auto;
+}
 }

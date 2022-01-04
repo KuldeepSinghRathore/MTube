@@ -4,9 +4,11 @@ import { SelectBy } from "./Components/SelectBy/SelectBy"
 import VideoCard from "./Components/VideoCard/VideoCard"
 import "./VideoPage.css"
 const VideoPage = () => {
-  const { state } = useStateContext()
+  const { state, isLoading } = useStateContext()
   console.log(state.videos, "state")
-  return (
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : (
     <>
       <SelectBy />
 

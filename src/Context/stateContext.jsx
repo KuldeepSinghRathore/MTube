@@ -36,8 +36,6 @@ export const StateProvider = ({ children }) => {
     switch (action.type) {
       case "LOAD_VIDEOS":
         return { ...state, videos: action.payload }
-      case "SET_CURRENT_VIDEO":
-        return { ...state, currentVideo: action.payload }
 
       default:
         return state
@@ -45,7 +43,6 @@ export const StateProvider = ({ children }) => {
   }
   const initialState = {
     videos: [],
-    currentVideo: null,
   }
   const [state, dispatch] = useReducer(reducer, initialState)
 

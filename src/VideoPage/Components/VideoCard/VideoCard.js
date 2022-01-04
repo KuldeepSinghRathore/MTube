@@ -1,16 +1,15 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
-import { useStateContext } from "../../../Context/stateContext"
+
 import "./VideoCard.css"
 const VideoCard = ({ videoObj }) => {
   const { title, creator, views, youtubeId } = videoObj
   const navigate = useNavigate()
-  const { dispatch } = useStateContext()
+
   return (
     <div
       className="videoCard"
       onClick={() => {
-        dispatch({ type: "SET_CURRENT_VIDEO", payload: videoObj })
         navigate(`/video/${youtubeId}`)
       }}
     >
