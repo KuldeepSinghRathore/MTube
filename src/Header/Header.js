@@ -6,9 +6,14 @@ import "./Header.css"
 import logo from "../images/moontube-logo.png"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../Context/authContext"
+import { useStateContext } from "../Context/stateContext"
 export const Header = () => {
   const navigate = useNavigate()
   const { user } = useAuth()
+  const { state, dispatch } = useStateContext()
+  const handleSearch = (e) => {
+    dispatch({ type: "SEARCH_BY", payload: e.target.value })
+  }
   return (
     <div className="header">
       <div className="header__left">
@@ -31,7 +36,7 @@ export const Header = () => {
       </div>
       <div className="header__middle">
         <input type="text" placeholder="Search..." />
-        <SearchIcon className="header__searchButton" />
+        <SearchIcon className="header__searchButton" onChange={handleSearch} />
       </div>
       <div className="header__right">
         {user.isLoggedIn ? (

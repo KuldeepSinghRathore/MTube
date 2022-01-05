@@ -6,6 +6,8 @@ import "./VideoPage.css"
 const VideoPage = () => {
   const { state, isLoading } = useStateContext()
   console.log(state.videos, "state")
+
+  const toDisplay = state.filtered.length > 0 ? state.filtered : state.videos
   return isLoading ? (
     <div>Loading...</div>
   ) : (
@@ -15,7 +17,7 @@ const VideoPage = () => {
       <div className="videoPage">
         {/* <h2>I am Recommended</h2> */}
         <div className="videoPage__videos">
-          {state.videos.map((video) => (
+          {toDisplay.map((video) => (
             <VideoCard key={video._id} videoObj={video} />
           ))}
         </div>

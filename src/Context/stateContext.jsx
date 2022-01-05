@@ -42,6 +42,32 @@ export const StateProvider = ({ children }) => {
         return { ...state, liked: action.payload }
       case "LOAD_SAVED":
         return { ...state, saved: action.payload }
+      case "FILTER_BY":
+        return {
+          ...state,
+          filtered:
+            action.payload !== "All"
+              ? state.videos.filter((video) => video.creator === action.payload)
+              : state.videos,
+        }
+      case "SELECT_BY":
+        return { ...state, selectBy: action.payload }
+      case "SEARCH_BY":
+        return { ...state, searchBy: action.payload }
+      case "ADD_TO_HISTORY":
+        return {
+          ...state,
+          history: [...state.history, { video: action.payload }],
+        }
+      case "ADD_TO_LIKED":
+        return { ...state, liked: [...state.liked, { video: action.payload }] }
+      case "REMOVE_FROM_LIKED":
+        return {
+          ...state,
+          liked: state.liked.filter(
+            (video) => video.video._id != action.payload._id
+          ),
+        }
       case "LOGOUT":
         return { ...state, history: [], liked: [], saved: [] }
       default:
@@ -53,6 +79,9 @@ export const StateProvider = ({ children }) => {
     history: [],
     liked: [],
     saved: [],
+    filtered: [],
+    selectBy: "All",
+    serachBy: "",
   }
   const [state, dispatch] = useReducer(reducer, initialState)
 

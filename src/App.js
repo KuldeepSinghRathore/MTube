@@ -34,6 +34,7 @@ function App() {
           <Route path="/video/:id" element={<SingleVideo />} />
           <Route path="library" element={<Library />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/liked" element={<LikedPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/user" element={<User />} />
           <Route path="*" element={<NotFound />} />

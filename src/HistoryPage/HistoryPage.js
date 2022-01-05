@@ -1,25 +1,23 @@
 import React from "react"
+import { useStateContext } from "../Context/stateContext"
 import VideoCard from "../VideoPage/Components/VideoCard/VideoCard"
 
 const HistoryPage = () => {
-  const video = {
-    youtubeId: "1XXVknMiVfc",
-    title: "Never Be Comfortable With Failure | Ankur Warikoo",
-    creator: "Josh Talks",
-    views: "4,393,898",
-  }
+  const { state } = useStateContext()
+
   return (
     <div className="videoPage">
-      <h2>I am History</h2>
+      <h2>History</h2>
       <div className="videoPage__videos">
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
+        {state.history.length > 0 ? (
+          state?.history.map(({ video }) => (
+            <VideoCard key={video._id} videoObj={video} />
+          ))
+        ) : (
+          <div>
+            <h2>No History Please Go Watch A Video</h2>
+          </div>
+        )}
       </div>
     </div>
   )
