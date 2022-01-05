@@ -13,10 +13,10 @@ const VideoPage = () => {
       <SelectBy />
 
       <div className="videoPage">
-        <h2>I am Recommended</h2>
+        {/* <h2>I am Recommended</h2> */}
         <div className="videoPage__videos">
           {state.videos.map((video) => (
-            <VideoCard key={video.id} videoObj={video} />
+            <VideoCard key={video._id} videoObj={video} />
           ))}
         </div>
       </div>

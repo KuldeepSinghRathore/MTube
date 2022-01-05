@@ -36,13 +36,23 @@ export const StateProvider = ({ children }) => {
     switch (action.type) {
       case "LOAD_VIDEOS":
         return { ...state, videos: action.payload }
-
+      case "LOAD_HISTORY":
+        return { ...state, history: action.payload }
+      case "LOAD_LIKED":
+        return { ...state, liked: action.payload }
+      case "LOAD_SAVED":
+        return { ...state, saved: action.payload }
+      case "LOGOUT":
+        return { ...state, history: [], liked: [], saved: [] }
       default:
         return state
     }
   }
   const initialState = {
     videos: [],
+    history: [],
+    liked: [],
+    saved: [],
   }
   const [state, dispatch] = useReducer(reducer, initialState)
 

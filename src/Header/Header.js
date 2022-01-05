@@ -4,7 +4,11 @@ import SearchIcon from "@mui/icons-material/Search"
 import { Avatar } from "@mui/material"
 import "./Header.css"
 import logo from "../images/moontube-logo.png"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../Context/authContext"
 export const Header = () => {
+  const navigate = useNavigate()
+  const { user } = useAuth()
   return (
     <div className="header">
       <div className="header__left">
@@ -30,11 +34,15 @@ export const Header = () => {
         <SearchIcon className="header__searchButton" />
       </div>
       <div className="header__right">
-        <Avatar
-          className="header__avatar"
-          alt="avatar"
-          src="https://yt3.ggpht.com/yti/APfAmoH_bozIJd9y4Fk5zISUUkImojkq5E_VCAbHtog2=s88-c-k-c0x00ffffff-no-rj-mo"
-        />
+        {user.isLoggedIn ? (
+          <div className="header__button" onClick={() => navigate("/user")}>
+            Hi {user.userData.firstName}
+          </div>
+        ) : (
+          <div className="header__button" onClick={() => navigate("/login")}>
+            Login
+          </div>
+        )}
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
-
 import "./VideoCard.css"
 const VideoCard = ({ videoObj }) => {
   const { title, creator, views, youtubeId } = videoObj

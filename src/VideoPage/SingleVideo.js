@@ -14,7 +14,7 @@ export const SingleVideo = () => {
     return videos.find((video) => video.youtubeId === id)
   }
 
-  const currentVideo = currentVideoFind(state?.videos, id)
+  const currentVideo = currentVideoFind(state.videos, id)
   return (
     <div className="singleVideo">
       <div className="singleVideo_flex">
@@ -22,7 +22,8 @@ export const SingleVideo = () => {
           className="singleVideo__frame"
           src={`https://www.youtube.com/embed/${currentVideo?.youtubeId}`}
           frameBorder="0"
-          allowFullScreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen=""
           title={currentVideo?.title}
         />
 

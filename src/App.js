@@ -11,6 +11,9 @@ import { NotFound } from "./NotFound/NotFound"
 import Playlists from "./Playlists/Playlists"
 import PlaylistPlayer from "./Playlists/PlaylistPlayer/PlaylistPlayer"
 import Library from "./Library/Library"
+import { SignUp } from "./Auth/SignUp/SignUp"
+import Login from "./Auth/Login/Login"
+import User from "./User/User"
 
 function App() {
   return (
@@ -30,10 +33,12 @@ function App() {
           <Route path="/playlist" element={<PlaylistPlayer />} />
           <Route path="/video/:id" element={<SingleVideo />} />
           <Route path="library" element={<Library />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/user" element={<User />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
-
       <BottomNavBar />
     </div>
   )
