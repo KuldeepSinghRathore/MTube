@@ -14,6 +14,7 @@ import Library from "./Library/Library"
 import { SignUp } from "./Auth/SignUp/SignUp"
 import Login from "./Auth/Login/Login"
 import User from "./User/User"
+import SavedPage from "./SavedPage/SavedPage"
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="library" element={<Library />} />
           <Route path="/login" element={<Login />} />
           <Route path="/liked" element={<LikedPage />} />
+          <Route path="/saved" element={<SavedPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/user" element={<User />} />
           <Route path="*" element={<NotFound />} />

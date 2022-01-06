@@ -111,6 +111,24 @@ const Login = () => {
       }
     }
   }
+  const getPlaylist = async (urlId) => {
+    try {
+      const { status, data } = await axios.get(`${API}/api/playlist/${urlId}`)
+
+      if (status === 200) {
+        dispatch({
+          type: "LOAD_PLAYLIST",
+          payload: data.playlist,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      const { status, data } = error.response
+      if (status !== 200) {
+        setError(data.message)
+      }
+    }
+  }
 
   useEffect(() => {
     if (user?.isLoggedIn && user?.userData?.userId) {
@@ -128,6 +146,12 @@ const Login = () => {
     if (user?.isLoggedIn && user?.userData?.userId) {
       console.log(user, user.userData.userId, "from login useEffect")
       getSaved(user.userData.userId)
+    }
+  }, [user.isLoggedIn])
+  useEffect(() => {
+    if (user?.isLoggedIn && user?.userData?.userId) {
+      console.log(user, user.userData.userId, "from login useEffect")
+      getPlaylist(user.userData.userId)
     }
   }, [user.isLoggedIn])
 

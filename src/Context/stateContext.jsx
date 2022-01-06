@@ -68,6 +68,19 @@ export const StateProvider = ({ children }) => {
             (video) => video.video._id != action.payload._id
           ),
         }
+      case "ADD_TO_SAVED":
+        return {
+          ...state,
+          saved: [...state.saved, { video: action.payload }],
+        }
+      case "REMOVE_FROM_SAVED":
+        return {
+          ...state,
+          saved: state.saved.filter(
+            (video) => video.video._id != action.payload._id
+          ),
+        }
+
       case "LOGOUT":
         return { ...state, history: [], liked: [], saved: [] }
       default:

@@ -4,6 +4,8 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt"
 import ThumbUpOffAltOutlinedIcon from "@mui/icons-material/ThumbUpOffAltOutlined"
+import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
+import BookmarkIcon from "@mui/icons-material/Bookmark"
 import "./SingleVideo.css"
 import { useStateContext } from "../Context/stateContext"
 import { useNavigate, useParams } from "react-router-dom"
@@ -27,11 +29,18 @@ export const SingleVideo = () => {
   const removeLikeButton = (payload, dispatch, navigate) => {
     dispatch({ type: "REMOVE_FROM_LIKED", payload })
   }
+  const handleSavedButton = (payload, dispatch, navigate) => {
+    dispatch({ type: "ADD_TO_SAVED", payload })
+  }
+  const removeSavedButton = (payload, dispatch, navigate) => {
+    dispatch({ type: "REMOVE_FROM_SAVED", payload })
+  }
   const isAlreadyExist = (arr, id) => {
     return arr.find(({ video }) => video._id == id) ? true : false
   }
   const isLiked = isAlreadyExist(state.liked, currentVideo._id)
   console.log(isAlreadyExist(state.liked, currentVideo._id), "isAlreadyExist")
+  const isSaved = isAlreadyExist(state.saved, currentVideo._id)
   const addToLiked = async () => {
     try {
       if (user.isLoggedIn) {
@@ -52,16 +61,46 @@ export const SingleVideo = () => {
   const removeFromLiked = async () => {
     try {
       if (user.isLoggedIn) {
-        const { status, data } = await axios.delete(
+        const { status } = await axios.delete(
           `${API}/api/liked/${user.userData.userId}/${currentVideo._id}`,
           {}
         )
         if (status === 200) {
           removeLikeButton(currentVideo, dispatch, navigate)
-          // dispatch({
-          //   type: "LOAD_LIKED",
-          //   payload: data.liked.likedItems,
-          // })
+        }
+      } else {
+        navigate("/login")
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const addToSaved = async () => {
+    try {
+      if (user.isLoggedIn) {
+        const { status } = await axios.post(
+          `${API}/api/saved/${user.userData.userId}/${currentVideo._id}`,
+          {}
+        )
+        if (status === 200) {
+          handleSavedButton(currentVideo, dispatch, navigate)
+        }
+      } else {
+        navigate("/login")
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const removeFromSaved = async () => {
+    try {
+      if (user.isLoggedIn) {
+        const { status } = await axios.delete(
+          `${API}/api/saved/${user.userData.userId}/${currentVideo._id}`,
+          {}
+        )
+        if (status === 200) {
+          removeSavedButton(currentVideo, dispatch, navigate)
         }
       } else {
         navigate("/login")
@@ -95,7 +134,18 @@ export const SingleVideo = () => {
             ) : (
               <ThumbUpOffAltOutlinedIcon onClick={addToLiked} />
             )}
-            <BookmarkBorderIcon style={{ margin: "0 15px" }} />
+            {isSaved ? (
+              <BookmarkIcon
+                onClick={removeFromSaved}
+                style={{ margin: "0 15px" }}
+              />
+            ) : (
+              <BookmarkBorderOutlinedIcon
+                onClick={addToSaved}
+                style={{ margin: "0 15px" }}
+              />
+            )}
+
             <PlaylistAddIcon />
           </div>
         </div>

@@ -6,7 +6,7 @@ const LikedPage = () => {
   const { state } = useStateContext()
   return (
     <div className="videoPage">
-      <h2>I am LikedPage</h2>
+      <h2>Liked Videos</h2>
       <div className="videoPage__videos">
         {state.liked.length > 0 ? (
           state?.liked.map(({ video }) => (
