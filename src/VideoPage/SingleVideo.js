@@ -1,6 +1,5 @@
 import React from "react"
 
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt"
 import ThumbUpOffAltOutlinedIcon from "@mui/icons-material/ThumbUpOffAltOutlined"
@@ -12,17 +11,23 @@ import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { useAuth } from "../Context/authContext"
 import { API } from "../Utils/API"
+import { Modal } from "../Playlists/Modal/Modal"
+export const isAlreadyExist = (arr, id) => {
+  return arr.find(({ video }) => video._id.toString() === id.toString())
+    ? true
+    : false
+}
 export const SingleVideo = () => {
   const { state, dispatch } = useStateContext()
   const { id } = useParams()
   const { user } = useAuth()
   const navigate = useNavigate()
   const currentVideoFind = (videos, id) => {
-    return videos.find((video) => video.youtubeId === id)
+    return videos.find((video) => video.youtubeId == id)
   }
 
   const currentVideo = currentVideoFind(state.videos, id)
-
+  console.log(currentVideo, "currentVideo after render")
   const handleLikeButton = (payload, dispatch, navigate) => {
     dispatch({ type: "ADD_TO_LIKED", payload })
   }
@@ -35,12 +40,10 @@ export const SingleVideo = () => {
   const removeSavedButton = (payload, dispatch, navigate) => {
     dispatch({ type: "REMOVE_FROM_SAVED", payload })
   }
-  const isAlreadyExist = (arr, id) => {
-    return arr.find(({ video }) => video._id == id) ? true : false
-  }
-  const isLiked = isAlreadyExist(state.liked, currentVideo._id)
-  console.log(isAlreadyExist(state.liked, currentVideo._id), "isAlreadyExist")
-  const isSaved = isAlreadyExist(state.saved, currentVideo._id)
+
+  const isLiked = isAlreadyExist(state.liked, currentVideo?._id)
+  // console.log(isAlreadyExist(state.liked, currentVideo?._id), "isAlreadyExist")
+  const isSaved = isAlreadyExist(state.saved, currentVideo?._id)
   const addToLiked = async () => {
     try {
       if (user.isLoggedIn) {
@@ -114,7 +117,7 @@ export const SingleVideo = () => {
       <div className="singleVideo_flex">
         <iframe
           className="singleVideo__frame"
-          src={`https://www.youtube.com/embed/${currentVideo?.youtubeId}`}
+          src={`https://www.youtube-nocookie.com/embed/${currentVideo?.youtubeId}`}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen=""
@@ -129,6 +132,7 @@ export const SingleVideo = () => {
             <p>{currentVideo?.views} views</p>
           </div>
           <div>
+            <Modal vidObj={currentVideo} useparam={id} />
             {isLiked ? (
               <ThumbUpAltIcon onClick={removeFromLiked} />
             ) : (
@@ -146,7 +150,11 @@ export const SingleVideo = () => {
               />
             )}
 
-            <PlaylistAddIcon />
+            <PlaylistAddIcon
+              onClick={() =>
+                dispatch({ type: "TOGGLE_PLAYLIST_MODAL", payload: true })
+              }
+            />
           </div>
         </div>
       </div>

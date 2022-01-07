@@ -2,30 +2,50 @@ import React from "react"
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined"
 import "./PlaylistsList.css"
 import { useNavigate } from "react-router-dom"
-const PlaylistsList = () => {
+import { usePlaylist } from "../../Context/playlistContext"
+const PlaylistsList = ({ plObj }) => {
+  const { playlistDispatch } = usePlaylist()
+  console.log(plObj, "plObj")
+  const { playlistName, playlistItems } = plObj
+  const playlistCover =
+    playlistItems.length > 0 ? playlistItems[0].video.youtubeId : ""
   const navigate = useNavigate()
+  const handlePlaylistClick = () => {
+    playlistDispatch({
+      type: "SET_PLAYLIST",
+      payload: { playlistName, playlistItems },
+    })
+    navigate("/playlist")
+  }
   return (
     <div>
       <div className="playlistsList">
         <div className="thumb">
           <p>
             <span className="w100">
-              10 Videos <i></i>
+              {playlistItems?.length} Videos <i></i>
             </span>
-            <span className="w280" onClick={() => navigate("/playlist")}>
+            <span className="w280" onClick={handlePlaylistClick}>
               <i>►</i> Play All
             </span>
           </p>
           <img
-            src="http://i3.ytimg.com/vi/1XXVknMiVfc/maxresdefault.jpg
-"
+            src={`https://i3.ytimg.com/vi/${playlistCover}/hqdefault.jpg`}
             alt=""
           />
         </div>
         <div className="playlistsList__info">
-          <p>Playlist Name </p>
+          <p>{playlistName && playlistName} </p>
           <span>
-            <DeleteForeverOutlinedIcon className="delete-icon" />
+            <DeleteForeverOutlinedIcon
+              className="delete-icon"
+              onClick={() =>
+                playlistDispatch({
+                  type: "DELETE_PLAYLIST",
+                  payload: playlistName,
+                })
+              }
+            />
           </span>
         </div>
       </div>

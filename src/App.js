@@ -15,11 +15,13 @@ import { SignUp } from "./Auth/SignUp/SignUp"
 import Login from "./Auth/Login/Login"
 import User from "./User/User"
 import SavedPage from "./SavedPage/SavedPage"
+import { Modal } from "./Playlists/Modal/Modal"
 
 function App() {
   return (
     <div className="app">
       {/* Header */}
+      {/* <Modal /> */}
       <Header />
       <div className="app_page">
         <Sidebar />

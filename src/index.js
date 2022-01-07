@@ -6,15 +6,18 @@ import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter as Router } from "react-router-dom"
 import { StateProvider } from "./Context/stateContext"
 import { AuthProvider } from "./Context/authContext"
+import { PlaylistProvider } from "./Context/playlistContext"
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <StateProvider>
-        <Router>
-          <App />
-        </Router>
-      </StateProvider>
+      <PlaylistProvider>
+        <StateProvider>
+          <Router>
+            <App />
+          </Router>
+        </StateProvider>
+      </PlaylistProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")

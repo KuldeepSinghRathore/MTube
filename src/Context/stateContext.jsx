@@ -12,6 +12,7 @@ export const StateContext = createContext()
 
 export const StateProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
+  console.log(isLoading, "isLoading")
   const getAllVideos = async () => {
     setIsLoading(true)
     const { data, status } = await axios.get(`${API}/api/videos`)
@@ -80,7 +81,8 @@ export const StateProvider = ({ children }) => {
             (video) => video.video._id != action.payload._id
           ),
         }
-
+      case "TOGGLE_PLAYLIST_MODAL":
+        return { ...state, playlistModal: action.payload }
       case "LOGOUT":
         return { ...state, history: [], liked: [], saved: [] }
       default:
@@ -95,6 +97,7 @@ export const StateProvider = ({ children }) => {
     filtered: [],
     selectBy: "All",
     serachBy: "",
+    playlistModal: false,
   }
   const [state, dispatch] = useReducer(reducer, initialState)
 

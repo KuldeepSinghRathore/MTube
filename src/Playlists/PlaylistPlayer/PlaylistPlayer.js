@@ -1,27 +1,23 @@
 import React from "react"
+import { usePlaylist } from "../../Context/playlistContext"
 import VideoCard from "../../VideoPage/Components/VideoCard/VideoCard"
 
 const PlaylistPlayer = () => {
-  const video = {
-    youtubeId: "1XXVknMiVfc",
-    title: "Never Be Comfortable With Failure | Ankur Warikoo",
-    creator: "Josh Talks",
-    views: "4,393,898",
-  }
+  const { playlistState } = usePlaylist()
+  console.log(playlistState, "playlistState")
   return (
-    <div className="videoPage">
-      <h2>Playlist Name </h2>
-      <div className="videoPage__videos">
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-        <VideoCard videoObj={video} />
-      </div>
-    </div>
+    <>
+      {playlistState?.currentPlaylist !== null && (
+        <div className="videoPage">
+          <h2>{playlistState?.currentPlaylist?.playlistName} </h2>
+          {playlistState?.currentPlaylist?.playlistItems.map(({ video }) => (
+            <div className="videoPage__videos">
+              <VideoCard key={video._id} videoObj={video} />
+            </div>
+          ))}
+        </div>
+      )}
+    </>
   )
 }
 
