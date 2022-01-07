@@ -35,11 +35,12 @@ export const Modal = ({ vidObj, useparam }) => {
     videoId
   ) => {
     try {
-      if (user.isLoggedIn && playlistName && videoId !== "") {
+      if (user.isLoggedIn && playlistName !== "" && videoId !== "") {
         const { status } = await axios.post(
           `${API}/api/playlist/${user.userData.userId}/${videoId}`,
           { playlistName }
         )
+        console.log(status, "status permission to delete")
         if (status === 200) {
           createPlaylist(playlistName, vidObj)
         }
@@ -154,7 +155,13 @@ export const Modal = ({ vidObj, useparam }) => {
                   />
                   <div
                     className="bottom__create-btn"
-                    onClick={() => createPlaylist(inputValue, vidObj)}
+                    onClick={() =>
+                      handleCreateAndAddToPlaylist(
+                        inputValue,
+                        vidObj,
+                        vidObj?._id
+                      )
+                    }
                   >
                     CREATE
                   </div>
