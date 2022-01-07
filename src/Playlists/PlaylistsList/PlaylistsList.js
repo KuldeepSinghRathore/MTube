@@ -3,8 +3,12 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import "./PlaylistsList.css"
 import { useNavigate } from "react-router-dom"
 import { usePlaylist } from "../../Context/playlistContext"
+import { useAuth } from "../../Context/authContext"
+import axios from "axios"
+import { API } from "../../Utils/API"
 const PlaylistsList = ({ plObj }) => {
   const { playlistDispatch } = usePlaylist()
+  const { user } = useAuth()
   console.log(plObj, "plObj")
   const { playlistName, playlistItems } = plObj
   const playlistCover =
@@ -16,6 +20,26 @@ const PlaylistsList = ({ plObj }) => {
       payload: { playlistName, playlistItems },
     })
     navigate("/playlist")
+  }
+  const handleDeletePlaylist = async () => {
+    try {
+      if (user.isLoggedIn) {
+        const { status } = await axios.delete(
+          `${API}/api/playlist/${user.userData.userId}`,
+          { data: { playlistName } }
+        )
+        if (status === 200) {
+          playlistDispatch({
+            type: "DELETE_PLAYLIST",
+            payload: playlistName,
+          })
+        }
+      } else {
+        navigate("/login")
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <div>
@@ -39,12 +63,7 @@ const PlaylistsList = ({ plObj }) => {
           <span>
             <DeleteForeverOutlinedIcon
               className="delete-icon"
-              onClick={() =>
-                playlistDispatch({
-                  type: "DELETE_PLAYLIST",
-                  payload: playlistName,
-                })
-              }
+              onClick={handleDeletePlaylist}
             />
           </span>
         </div>

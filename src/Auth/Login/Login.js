@@ -2,11 +2,13 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../../Context/authContext"
+import { usePlaylist } from "../../Context/playlistContext"
 import { useStateContext } from "../../Context/stateContext"
 import { API } from "../../Utils/API"
 import "./Login.css"
 const Login = () => {
   const { dispatch } = useStateContext()
+  const { playlistDispatch } = usePlaylist()
   const path = useLocation().state
 
   const navigate = useNavigate()
@@ -93,6 +95,7 @@ const Login = () => {
       }
     }
   }
+  // getSaved
   const getSaved = async (urlId) => {
     try {
       const { status, data } = await axios.get(`${API}/api/saved/${urlId}`)
@@ -111,12 +114,13 @@ const Login = () => {
       }
     }
   }
+  // getPlaylist
   const getPlaylist = async (urlId) => {
     try {
       const { status, data } = await axios.get(`${API}/api/playlist/${urlId}`)
 
       if (status === 200) {
-        dispatch({
+        playlistDispatch({
           type: "LOAD_PLAYLIST",
           payload: data.playlist,
         })

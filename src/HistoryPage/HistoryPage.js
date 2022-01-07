@@ -10,8 +10,8 @@ const HistoryPage = () => {
       <h2>Watch History</h2>
       <div className="videoPage__videos">
         {state.history.length > 0 ? (
-          state?.history.map(({ video }) => (
-            <VideoCard key={video._id} videoObj={video} />
+          state?.history.map(({ video }, idx) => (
+            <VideoCard key={idx.toString()} videoObj={video} />
           ))
         ) : (
           <div>

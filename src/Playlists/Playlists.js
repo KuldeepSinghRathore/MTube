@@ -8,11 +8,18 @@ const Playlists = () => {
   return (
     <div className="playlistsContainer">
       <h2>Playlists</h2>
-      <div className="playlists">
-        {playlistState.playlist.map((pl) => (
-          <PlaylistsList key={pl.playlistName} plObj={pl} />
-        ))}
-      </div>
+      {playlistState.playlist.length > 0 ? (
+        <div className="playlists">
+          {playlistState.playlist.map((pl) => (
+            <PlaylistsList key={pl.playlistName} plObj={pl} />
+          ))}
+        </div>
+      ) : (
+        <div className="playlists">
+          {" "}
+          <h2>No Playlists Found Please Create Playlist to See</h2>{" "}
+        </div>
+      )}
     </div>
   )
 }

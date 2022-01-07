@@ -29,16 +29,32 @@ export const SingleVideo = () => {
   const currentVideo = currentVideoFind(state.videos, id)
   console.log(currentVideo, "currentVideo after render")
   const handleLikeButton = (payload, dispatch, navigate) => {
-    dispatch({ type: "ADD_TO_LIKED", payload })
+    if (user.isLoggedIn) {
+      dispatch({ type: "ADD_TO_LIKED", payload })
+    } else {
+      navigate("/login")
+    }
   }
   const removeLikeButton = (payload, dispatch, navigate) => {
-    dispatch({ type: "REMOVE_FROM_LIKED", payload })
+    if (user.isLoggedIn) {
+      dispatch({ type: "REMOVE_FROM_LIKED", payload })
+    } else {
+      navigate("/login")
+    }
   }
   const handleSavedButton = (payload, dispatch, navigate) => {
-    dispatch({ type: "ADD_TO_SAVED", payload })
+    if (user.isLoggedIn) {
+      dispatch({ type: "ADD_TO_SAVED", payload })
+    } else {
+      navigate("/login")
+    }
   }
   const removeSavedButton = (payload, dispatch, navigate) => {
-    dispatch({ type: "REMOVE_FROM_SAVED", payload })
+    if (user.isLoggedIn) {
+      dispatch({ type: "REMOVE_FROM_SAVED", payload })
+    } else {
+      navigate("/login")
+    }
   }
 
   const isLiked = isAlreadyExist(state.liked, currentVideo?._id)
@@ -152,7 +168,9 @@ export const SingleVideo = () => {
 
             <PlaylistAddIcon
               onClick={() =>
-                dispatch({ type: "TOGGLE_PLAYLIST_MODAL", payload: true })
+                user.isLoggedIn
+                  ? dispatch({ type: "TOGGLE_PLAYLIST_MODAL", payload: true })
+                  : navigate("/login")
               }
             />
           </div>
