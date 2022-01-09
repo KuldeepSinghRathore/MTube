@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import { Avatar } from "@mui/material"
 import "./Header.css"
 import logo from "../images/moontube-logo.png"
+import BackspaceIcon from "@mui/icons-material/Backspace"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../Context/authContext"
 import { useStateContext } from "../Context/stateContext"
@@ -35,8 +36,20 @@ export const Header = () => {
         </div>
       </div>
       <div className="header__middle">
-        <input type="text" placeholder="Search..." />
-        <SearchIcon className="header__searchButton" onChange={handleSearch} />
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearch}
+          value={state.searchBy}
+        />
+        {state.searchBy.length > 0 ? (
+          <BackspaceIcon
+            className="header__searchButton"
+            onClick={() => dispatch({ type: "SEARCH_BY", payload: "" })}
+          />
+        ) : (
+          <SearchIcon className="header__searchButton" />
+        )}
       </div>
       <div className="header__right">
         {user.isLoggedIn ? (

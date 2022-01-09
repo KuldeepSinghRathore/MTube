@@ -69,6 +69,7 @@ export const StateProvider = ({ children }) => {
             (video) => video.video._id != action.payload._id
           ),
         }
+
       case "ADD_TO_SAVED":
         return {
           ...state,
@@ -96,7 +97,7 @@ export const StateProvider = ({ children }) => {
     saved: [],
     filtered: [],
     selectBy: "All",
-    serachBy: "",
+    searchBy: "",
     playlistModal: false,
   }
   const [state, dispatch] = useReducer(reducer, initialState)

@@ -5,17 +5,24 @@ import VideoCard from "./Components/VideoCard/VideoCard"
 import "./VideoPage.css"
 const VideoPage = () => {
   const { state, isLoading } = useStateContext()
-  console.log(state.videos, "state")
+  console.log(state, "state")
 
-  const toDisplay = state.filtered.length > 0 ? state.filtered : state.videos
+  const toDisplay = state.filtered.filter((video) =>
+    Object.values(video)
+      .join(" ")
+      .toLowerCase()
+      .includes(state.searchBy.toLowerCase())
+  )
+
   return isLoading ? (
     <div>Loading...</div>
+  ) : state.searchBy !== "" && !toDisplay.length > 0 ? (
+    <h2>Nothin Match the Search Term</h2>
   ) : (
     <>
       <SelectBy />
 
       <div className="videoPage">
-        {/* <h2>I am Recommended</h2> */}
         <div className="videoPage__videos">
           {toDisplay.map((video) => (
             <VideoCard key={video._id} videoObj={video} />
