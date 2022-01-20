@@ -15,12 +15,15 @@ export const StateProvider = ({ children }) => {
   console.log(isLoading, "isLoading")
   const getAllVideos = async () => {
     setIsLoading(true)
+    const response = await axios.get(`${API}`)
+
     const { data, status } = await axios.get(`${API}/api/videos`)
 
     console.log(data, "data")
 
     if (status === 200) {
       dispatch({ type: "LOAD_VIDEOS", payload: data.videos })
+      dispatch({ type: "FILTER_BY", payload: "All" })
     }
   }
   useEffect(() => {
@@ -79,7 +82,7 @@ export const StateProvider = ({ children }) => {
         return {
           ...state,
           saved: state.saved.filter(
-            (video) => video.video._id != action.payload._id
+            (video) => video.video._id !== action.payload._id
           ),
         }
       case "TOGGLE_PLAYLIST_MODAL":

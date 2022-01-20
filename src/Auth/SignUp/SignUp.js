@@ -53,52 +53,54 @@ export const SignUp = () => {
     }
   }
   return (
-    <div className="signup">
+    <div>
       <h1>Create User Account</h1>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={signUpHandler}>
-        <label>firstName:</label>
-        <input
-          type="text"
-          name="firstName"
-          value={signUpDetails.firstName}
-          onChange={handleChange}
-        />
-        <label>lastName:</label>
-        <input
-          type="text"
-          name="lastName"
-          value={signUpDetails.lastName}
-          onChange={handleChange}
-        />
-        <label>Email:</label>
-        <input
-          type="text"
-          name="email"
-          value={signUpDetails.email}
-          onChange={handleChange}
-        />
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={signUpDetails.password}
-          onChange={handleChange}
-        />
-        <label>Confirm Password:</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          value={confirmPass}
-          onChange={(e) => setConfirmPass(e.target.value)}
-        />
+      <div className="signup">
+        <form onSubmit={signUpHandler} className="form__signup">
+          {error && <h2 className="error">{error}</h2>}
+          <label>FirstName:</label>
+          <input
+            type="text"
+            name="firstName"
+            value={signUpDetails.firstName}
+            onChange={handleChange}
+          />
+          <label>LastName:</label>
+          <input
+            type="text"
+            name="lastName"
+            value={signUpDetails.lastName}
+            onChange={handleChange}
+          />
+          <label>Email:</label>
+          <input
+            type="text"
+            name="email"
+            value={signUpDetails.email}
+            onChange={handleChange}
+          />
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={signUpDetails.password}
+            onChange={handleChange}
+          />
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={confirmPass}
+            onChange={(e) => setConfirmPass(e.target.value)}
+          />
 
-        <input
-          type="submit"
-          value="SignUp"
-          disabled={signUpDetails.password !== confirmPass}
-        />
-      </form>
+          <input
+            type="submit"
+            value="SignUp"
+            disabled={signUpDetails.password !== confirmPass}
+          />
+        </form>
+      </div>
     </div>
   )
 }

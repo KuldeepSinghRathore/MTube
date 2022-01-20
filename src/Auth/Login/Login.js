@@ -1,3 +1,4 @@
+import { height, width } from "@mui/system"
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
@@ -160,32 +161,30 @@ const Login = () => {
   }, [user.isLoggedIn])
 
   return (
-    <>
-      <div className="login">
-        {error && <p className="error">{error}</p>}
+    <div className="login">
+      <form onSubmit={handleLogin} className="login__form">
         <p className="login__text">Login</p>
-        <form onSubmit={handleLogin}>
-          <label>Email:</label>
-          <input
-            type="text"
-            name="email"
-            value={loginDetails.email}
-            onChange={handleChange}
-          />
-          <label>Password:</label>
-          <input
-            type="text"
-            name="password"
-            value={loginDetails.password}
-            onChange={handleChange}
-          />
-          <p>
-            new user ? <Link to="/signup">Signup</Link>
-          </p>
-          <input type="submit" value="Login" />
-        </form>
-      </div>
-    </>
+        {error && <h2 className="error">{error}</h2>}
+        <label>Email:</label>
+        <input
+          type="text"
+          name="email"
+          value={loginDetails.email}
+          onChange={handleChange}
+        />
+        <label>Password:</label>
+        <input
+          type="text"
+          name="password"
+          value={loginDetails.password}
+          onChange={handleChange}
+        />
+        <p>
+          new user ? <Link to="/signup">Signup</Link>
+        </p>
+        <input type="submit" value="Login" />
+      </form>
+    </div>
   )
 }
 

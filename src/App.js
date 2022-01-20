@@ -1,33 +1,29 @@
 import "./App.css"
-import { BottomNavBar } from "./Header/Components/BottomNavBar/BottomNavBar"
-import { Header } from "./Header/Header"
-import VideoPage from "./VideoPage/VideoPage"
-import { Sidebar } from "./Sidebar/Sidebar"
-import { SingleVideo } from "./VideoPage/SingleVideo"
-import HistoryPage from "./HistoryPage/HistoryPage"
-import LikedPage from "./LikedPage/LikedPage"
-import { Route, Routes } from "react-router-dom"
-import { NotFound } from "./NotFound/NotFound"
-import Playlists from "./Playlists/Playlists"
-import PlaylistPlayer from "./Playlists/PlaylistPlayer/PlaylistPlayer"
-import Library from "./Library/Library"
-import { SignUp } from "./Auth/SignUp/SignUp"
-import Login from "./Auth/Login/Login"
-import User from "./User/User"
-import SavedPage from "./SavedPage/SavedPage"
-import { Modal } from "./Playlists/Modal/Modal"
+import { Route, Routes, useLocation } from "react-router-dom"
+import { Header } from "Components/Header/Header"
+import { Sidebar } from "Components/Sidebar/Sidebar"
+import VideoPage from "Pages/VideoPage/VideoPage"
+import HistoryPage from "Pages/HistoryPage/HistoryPage"
+import LikedPage from "Pages/LikedPage/LikedPage"
+import PlaylistPlayer from "Pages/Playlists/PlaylistPlayer/PlaylistPlayer"
+import Playlists from "Pages/Playlists/Playlists"
+import { SingleVideo } from "Pages/VideoPage/SingleVideo"
+import Library from "Pages/Library/Library"
+import Login from "Auth/Login/Login"
+import SavedPage from "Pages/SavedPage/SavedPage"
+import { SignUp } from "Auth/SignUp/SignUp"
+import User from "Pages/User/User"
+import { NotFound } from "Pages/NotFound/NotFound"
+import { BottomNavBar } from "Components/Header/Components/BottomNavBar/BottomNavBar"
 
 function App() {
+  const path = useLocation().pathname
+  console.log(path)
   return (
     <div className="app">
-      {/* Header */}
-      {/* <Modal /> */}
       <Header />
       <div className="app_page">
-        <Sidebar />
-        {/* <Playlists /> */}
-        {/* <PlaylistPlayer /> */}
-        {/* <Playlists /> */}
+        {path !== "/signup" && path !== "/login" && <Sidebar />}
         <Routes>
           <Route path="/" element={<VideoPage />} />
           <Route path="/history" element={<HistoryPage />} />
@@ -37,9 +33,9 @@ function App() {
           <Route path="/video/:id" element={<SingleVideo />} />
           <Route path="library" element={<Library />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/liked" element={<LikedPage />} />
           <Route path="/saved" element={<SavedPage />} />
-          <Route path="/signup" element={<SignUp />} />
           <Route path="/user" element={<User />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
