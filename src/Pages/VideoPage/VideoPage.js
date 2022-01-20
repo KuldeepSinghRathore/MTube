@@ -1,11 +1,11 @@
 import React from "react"
-import { useStateContext } from "../../Context/stateContext"
-import VideoCard from "@Components/VideoCard/VideoCard"
-import { SelectBy } from "@Components/SelectBy/SelectBy"
+import { useStateContext } from "Context/stateContext"
+import VideoCard from "Pages/VideoPage/Components/VideoCard/VideoCard"
+import { SelectBy } from "Pages/VideoPage/Components/SelectBy/SelectBy"
 import "./VideoPage.css"
 const VideoPage = () => {
   const { state, isLoading } = useStateContext()
-  console.log(state, "state")
+  // console.log(state, "state")
 
   const toDisplay = state.filtered.filter((video) =>
     Object.values(video)
