@@ -52,7 +52,7 @@ export const SignUp = () => {
     }
   }
   return (
-    <div>
+    <div className="container-signup">
       <h1>Create User Account</h1>
       <div className="signup">
         <form onSubmit={signUpHandler} className="form__signup">
