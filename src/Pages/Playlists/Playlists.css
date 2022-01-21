@@ -1,0 +1,19 @@
+.playlistsContainer{
+    flex: 0.8;
+    padding: 40px 20px;
+    
+}
+.playlists{
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 100%;
+    
+}
+@media screen and (min-width: 1024px) {
+    .playlists{
+        flex: 1;
+    }
+}
+    

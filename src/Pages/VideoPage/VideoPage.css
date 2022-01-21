@@ -1,0 +1,27 @@
+.videoPage{
+    flex: 0.8;
+ background-color: #f9f9f9;
+padding: 67px 20px;
+padding-bottom: 0;
+}
+.videoPage__videos{
+           display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        }
+.videoPage > h2{
+   margin-left: 5px;
+   margin-bottom: 20px;
+}
+
+ @media screen and (max-width: 767px) {
+        .videoPage{
+           flex: 1;
+        }
+        .videoPage__videos{
+           display: flex;
+               flex-direction: column;
+        }
+        
+        
+    }

@@ -1,0 +1,32 @@
+.signup{
+    
+     display: flex;
+    width: 80vh;
+    height: 80vh;
+    flex: 1;
+    justify-content: center;
+
+}
+.form__signup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    
+}
+.form__signup input{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.form__signup input[type="submit"]{
+ cursor: pointer;
+    background: #fd4545;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
