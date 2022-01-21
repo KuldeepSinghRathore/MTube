@@ -73,7 +73,7 @@ export const SignUp = () => {
           />
           <label>Email:</label>
           <input
-            type="text"
+            type="email"
             name="email"
             value={signUpDetails.email}
             onChange={handleChange}
@@ -82,6 +82,7 @@ export const SignUp = () => {
           <input
             type="password"
             name="password"
+            minLength="6"
             value={signUpDetails.password}
             onChange={handleChange}
           />
@@ -89,6 +90,7 @@ export const SignUp = () => {
           <input
             type="password"
             name="confirmPassword"
+            minLength="6"
             value={confirmPass}
             onChange={(e) => setConfirmPass(e.target.value)}
           />

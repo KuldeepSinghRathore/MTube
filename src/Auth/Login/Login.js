@@ -57,15 +57,16 @@ const Login = () => {
         {error && <h2 className="error">{error}</h2>}
         <label>Email:</label>
         <input
-          type="text"
+          type="email"
           name="email"
           value={loginDetails.email}
           onChange={handleChange}
         />
         <label>Password:</label>
         <input
-          type="text"
+          type="password"
           name="password"
+          minLength="6"
           value={loginDetails.password}
           onChange={handleChange}
         />
