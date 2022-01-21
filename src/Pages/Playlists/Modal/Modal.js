@@ -6,6 +6,7 @@ import { usePlaylist } from "Context/playlistContext"
 import { useStateContext } from "Context/stateContext"
 import { API } from "Utils/API"
 import "./Modal.css"
+import { setupAuthHeaderForServiceCalls } from "Context/authContext"
 
 export const Modal = ({ vidObj, useparam }) => {
   const [modal, setModal] = useState(false)
@@ -36,10 +37,12 @@ export const Modal = ({ vidObj, useparam }) => {
   ) => {
     try {
       if (user.isLoggedIn && playlistName !== "" && videoId !== "") {
-        const { status } = await axios.post(
-          `${API}/api/playlist/${user.userData.userId}/${videoId}`,
-          { playlistName }
-        )
+        const { status } = await axios.post(`${API}/api/playlist/${videoId}`, {
+          headers: {
+            Authorization: `Bearer ${user.userData.token}`,
+          },
+          data: { playlistName },
+        })
         console.log(status, "status permission to delete")
         if (status === 200) {
           createPlaylist(playlistName, vidObj)
@@ -54,10 +57,16 @@ export const Modal = ({ vidObj, useparam }) => {
   const handleRemoveFromPlaylist = async (playlistName, videoId) => {
     console.log(playlistName, videoId, "playlistName, videoId")
     try {
-      if (user.isLoggedIn && playlistName !== "" && videoId !== "") {
+      if (user.userData.token && playlistName !== "" && videoId !== "") {
         const { status } = await axios.delete(
-          `${API}/api/playlist/${user.userData.userId}/${videoId}`,
-          { data: { playlistName } }
+          `${API}/api/playlist/${videoId}`,
+
+          {
+            headers: {
+              Authorization: `Bearer ${user.userData.token}`,
+            },
+            data: { playlistName },
+          }
         )
         if (status === 200) {
           playlistDispatch({
@@ -99,7 +108,7 @@ export const Modal = ({ vidObj, useparam }) => {
               <div className="middle">
                 {playlistState?.playlist.map((playlistObj, idx) => {
                   const isChecked = playlistObj?.playlistItems?.findIndex(
-                    (check) => check?.video?.youtubeId == useparam
+                    (check) => check?.video?._id == useparam
                   )
                   console.log(
                     isChecked,

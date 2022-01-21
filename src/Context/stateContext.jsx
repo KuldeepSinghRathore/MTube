@@ -97,31 +97,34 @@ export const StateProvider = ({ children }) => {
     }
   }, [token])
 
-  // useEffect(() => {
-  //   // useEffect getSaved
-  //   // getSaved
-  //   const getSaved = async (urlId) => {
-  //     try {
-  //       const { status, data } = await axios.get(`${API}/api/saved/${urlId}`)
+  useEffect(() => {
+    // useEffect getSaved
+    // getSaved
+    const getSaved = async (token) => {
+      try {
+        const { status, data } = await axios.get(
+          `${API}/api/saved`,
+          setupAuthHeaderForServiceCalls(token)
+        )
 
-  //       if (status === 200) {
-  //         dispatch({
-  //           type: "LOAD_SAVED",
-  //           payload: data.saved.savedItems,
-  //         })
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //       const { status, data } = error.response
-  //       if (status !== 200) {
-  //         setError(data.message)
-  //       }
-  //     }
-  //   }
-  //   if (token) {
-  //     getSaved(userId)
-  //   }
-  // }, [token])
+        if (status === 200) {
+          dispatch({
+            type: "LOAD_SAVED",
+            payload: data.saved.savedItems,
+          })
+        }
+      } catch (error) {
+        console.log(error)
+        const { status, data } = error.response
+        if (status !== 200) {
+          setError(data.message)
+        }
+      }
+    }
+    if (token) {
+      getSaved(token)
+    }
+  }, [token])
 
   const reducer = (state, action) => {
     switch (action.type) {

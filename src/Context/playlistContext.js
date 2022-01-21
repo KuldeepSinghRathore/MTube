@@ -1,6 +1,7 @@
 import axios from "axios"
 import { createContext, useContext, useEffect, useReducer } from "react"
 import { API } from "Utils/API"
+import { setupAuthHeaderForServiceCalls } from "./authContext"
 import { useAuth } from "./authContext"
 
 export const PlaylistContext = createContext()
@@ -8,30 +9,34 @@ export const PlaylistContext = createContext()
 export const PlaylistProvider = ({ children }) => {
   const { user, setUser, error, setError } = useAuth()
   const { token, userId } = user?.userData
-  // useEffect(() => {
-  //   // getPlaylist
-  //   const getPlaylist = async (urlId) => {
-  //     try {
-  //       const { status, data } = await axios.get(`${API}/api/playlist/${urlId}`)
+  useEffect(() => {
+    //   // getPlaylist
+    const getPlaylist = async (token) => {
+      try {
+        const { status, data } = await axios.get(
+          `${API}/api/playlist`,
 
-  //       if (status === 200) {
-  //         playlistDispatch({
-  //           type: "LOAD_PLAYLIST",
-  //           payload: data.playlist,
-  //         })
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //       const { status, data } = error.response
-  //       if (status !== 200) {
-  //         setError(data.message)
-  //       }
-  //     }
-  //   }
-  //   if (token) {
-  //     getPlaylist(userId)
-  //   }
-  // }, [token])
+          setupAuthHeaderForServiceCalls(token)
+        )
+
+        if (status === 200) {
+          playlistDispatch({
+            type: "LOAD_PLAYLIST",
+            payload: data.playlist,
+          })
+        }
+      } catch (error) {
+        console.log(error)
+        const { status, data } = error.response
+        if (status !== 200) {
+          setError(data.message)
+        }
+      }
+    }
+    if (token) {
+      getPlaylist(token)
+    }
+  }, [token])
 
   const reducer = (state, action) => {
     switch (action.type) {

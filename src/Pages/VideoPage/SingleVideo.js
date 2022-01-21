@@ -115,8 +115,8 @@ export const SingleVideo = () => {
     try {
       if (user.isLoggedIn) {
         const { status } = await axios.post(
-          `${API}/api/saved/${user.userData.userId}/${currentVideo._id}`,
-          {}
+          `${API}/api/saved/${currentVideo._id}`,
+          setupAuthHeaderForServiceCalls(user.userData.token)
         )
         if (status === 200) {
           handleSavedButton(currentVideo, dispatch, navigate)
@@ -132,8 +132,8 @@ export const SingleVideo = () => {
     try {
       if (user.isLoggedIn) {
         const { status } = await axios.delete(
-          `${API}/api/saved/${user.userData.userId}/${currentVideo._id}`,
-          {}
+          `${API}/api/saved/${currentVideo._id}`,
+          setupAuthHeaderForServiceCalls(user.userData.token)
         )
         if (status === 200) {
           removeSavedButton(currentVideo, dispatch, navigate)
