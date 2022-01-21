@@ -5,16 +5,18 @@ import { Avatar } from "@mui/material"
 import "./Header.css"
 // import logo from "images/moontube-logo.png"
 import BackspaceIcon from "@mui/icons-material/Backspace"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "Context/authContext"
 import { useStateContext } from "Context/stateContext"
 export const Header = () => {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { state, dispatch } = useStateContext()
+  const path = useLocation().pathname
   const handleSearch = (e) => {
     dispatch({ type: "SEARCH_BY", payload: e.target.value })
   }
+
   return (
     <div className="header">
       <div className="header__left">
@@ -38,7 +40,8 @@ export const Header = () => {
       <div className="header__middle">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder={path !== "/" ? "Only Allowed at HomePage" : "Search..."}
+          disabled={path !== "/"}
           onChange={handleSearch}
           value={state.searchBy}
         />

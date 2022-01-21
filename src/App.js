@@ -17,11 +17,15 @@ import { NotFound } from "Pages/NotFound/NotFound"
 import { BottomNavBar } from "Components/Header/Components/BottomNavBar/BottomNavBar"
 import { useStateContext } from "Context/stateContext"
 import { Loader } from "Components/Loader/Loader"
+import { useEffect } from "react"
 
 function App() {
   const path = useLocation().pathname
   const { isLoading } = useStateContext()
-
+  const location = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location])
   if (isLoading) {
     return <Loader />
   }

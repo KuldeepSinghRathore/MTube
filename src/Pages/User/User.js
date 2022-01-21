@@ -2,7 +2,7 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "Context/authContext"
 import { useStateContext } from "Context/stateContext"
-
+import "./User.css"
 const User = () => {
   const { user, setUser } = useAuth()
   const navigate = useNavigate()
@@ -14,13 +14,23 @@ const User = () => {
     navigate("/")
   }
   return (
-    <div>
-      <h1>User Details</h1>
-      <p>FirstName: {user.userData.firstName}</p>
-      <p>LastName: {user.userData.lastName}</p>
-      <p>Email: {user.userData.email}</p>
-      <button onClick={logout}>Logout</button>
-    </div>
+    <>
+      <div className="user">
+        <h1>User Details</h1>
+        <div className="user__content">
+          <p>
+            <span>FirstName:</span> {user.userData.firstName}
+          </p>
+          <p>
+            <span>LastName:</span> {user.userData.lastName}
+          </p>
+          <p>
+            <span>Email:</span> {user.userData.email}
+          </p>
+          <button onClick={logout}>Logout</button>
+        </div>
+      </div>
+    </>
   )
 }
 
