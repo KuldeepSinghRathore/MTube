@@ -5,6 +5,7 @@ import { useAuth } from "Context/authContext"
 import { useStateContext } from "Context/stateContext"
 import { API } from "Utils/API"
 import "./VideoCard.css"
+import { setupAuthHeaderForServiceCalls } from "Context/authContext"
 const VideoCard = ({ videoObj }) => {
   const { title, creator, views, youtubeId } = videoObj
   const navigate = useNavigate()
@@ -14,21 +15,21 @@ const VideoCard = ({ videoObj }) => {
     dispatch({ type: "ADD_TO_HISTORY", payload })
     navigateTo
       ? navigate(`/video/${navigateTo}`)
-      : navigate(`/video/${payload.youtubeId}`)
+      : navigate(`/video/${payload._id}`)
   }
   const addToHistory = async () => {
     try {
       if (user.isLoggedIn) {
         const { data, status } = await axios.post(
-          `${API}/api/history/${user.userData.userId}/${videoObj._id}`,
-          {}
+          `${API}/api/history/${videoObj._id}`,
+          setupAuthHeaderForServiceCalls(user.userData.token)
         )
         if (status === 200) {
           console.log(data, "l27")
           clickButtonHandler(videoObj, dispatch, navigate)
         }
       } else {
-        navigate(`/video/${videoObj.youtubeId}`)
+        navigate(`/video/${videoObj._id}`)
       }
     } catch (error) {
       console.log(error)

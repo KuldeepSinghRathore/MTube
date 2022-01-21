@@ -15,13 +15,22 @@ import { SignUp } from "Auth/SignUp/SignUp"
 import User from "Pages/User/User"
 import { NotFound } from "Pages/NotFound/NotFound"
 import { BottomNavBar } from "Components/Header/Components/BottomNavBar/BottomNavBar"
+import { useStateContext } from "Context/stateContext"
+import { Loader } from "Components/Loader/Loader"
 
 function App() {
   const path = useLocation().pathname
+  const { isLoading } = useStateContext()
+
+  if (isLoading) {
+    return <Loader />
+  }
+
   console.log(path)
   return (
     <div className="app">
       <Header />
+
       <div className="app_page">
         {path !== "/signup" && path !== "/login" && <Sidebar />}
         <Routes>

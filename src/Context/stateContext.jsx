@@ -7,16 +7,18 @@ import {
   useState,
 } from "react"
 import { API } from "../Utils/API"
+import { setupAuthHeaderForServiceCalls } from "./authContext"
+import { useAuth } from "./authContext"
 
 export const StateContext = createContext()
 
 export const StateProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const { user, setUser, error, setError } = useAuth()
+  const { token, userId } = user?.userData
+  console.log(token, userId, "token and userId")
   console.log(isLoading, "isLoading")
   const getAllVideos = async () => {
-    setIsLoading(true)
-    const response = await axios.get(`${API}`)
-
     const { data, status } = await axios.get(`${API}/api/videos`)
 
     console.log(data, "data")
@@ -24,18 +26,103 @@ export const StateProvider = ({ children }) => {
     if (status === 200) {
       dispatch({ type: "LOAD_VIDEOS", payload: data.videos })
       dispatch({ type: "FILTER_BY", payload: "All" })
+      setIsLoading(false)
     }
   }
   useEffect(() => {
     console.log("useEffect of videos loading")
+    setIsLoading(true)
     try {
       getAllVideos()
     } catch (error) {
-      console.log(error)
-    } finally {
       setIsLoading(false)
+      console.log(error)
     }
   }, [])
+
+  useEffect(() => {
+    // useEffect Get History
+    if (token) {
+      const getHistory = async (token) => {
+        try {
+          const { status, data } = await axios.get(
+            `${API}/api/history`,
+            setupAuthHeaderForServiceCalls(token)
+          )
+
+          if (status === 200) {
+            dispatch({
+              type: "LOAD_HISTORY",
+              payload: data.history.historyItems,
+            })
+          }
+        } catch (error) {
+          console.log(error)
+          const { status, data } = error.response
+          if (status !== 200) {
+            setError(data.message)
+          }
+        }
+      }
+      getHistory(token)
+    }
+  }, [token])
+
+  useEffect(() => {
+    // useEffect getLiked
+    const getLiked = async (token) => {
+      try {
+        const { status, data } = await axios.get(
+          `${API}/api/liked`,
+          setupAuthHeaderForServiceCalls(token)
+        )
+
+        if (status === 200) {
+          dispatch({
+            type: "LOAD_LIKED",
+            payload: data.liked.likedItems,
+          })
+        }
+      } catch (error) {
+        console.log(error)
+        const { status, data } = error.response
+        if (status !== 200) {
+          setError(data.message)
+        }
+      }
+    }
+    if (token) {
+      console.log("getLiked", token)
+      getLiked(token)
+    }
+  }, [token])
+
+  // useEffect(() => {
+  //   // useEffect getSaved
+  //   // getSaved
+  //   const getSaved = async (urlId) => {
+  //     try {
+  //       const { status, data } = await axios.get(`${API}/api/saved/${urlId}`)
+
+  //       if (status === 200) {
+  //         dispatch({
+  //           type: "LOAD_SAVED",
+  //           payload: data.saved.savedItems,
+  //         })
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //       const { status, data } = error.response
+  //       if (status !== 200) {
+  //         setError(data.message)
+  //       }
+  //     }
+  //   }
+  //   if (token) {
+  //     getSaved(userId)
+  //   }
+  // }, [token])
+
   const reducer = (state, action) => {
     switch (action.type) {
       case "LOAD_VIDEOS":

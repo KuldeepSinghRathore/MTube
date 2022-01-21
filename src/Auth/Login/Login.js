@@ -13,12 +13,12 @@ const Login = () => {
   const path = useLocation().state
 
   const navigate = useNavigate()
-  const { user, setUser } = useAuth()
+  const { user, setUser, error, setError } = useAuth()
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
   })
-  const [error, setError] = useState("")
+
   const handleChange = (e) => {
     setLoginDetails({
       ...loginDetails,
@@ -55,110 +55,6 @@ const Login = () => {
       }
     }
   }
-
-  console.log(user, "user.isLoggedIn")
-
-  // useEffect Get History
-  const getHistory = async (urlId) => {
-    try {
-      console.log(user, "from login getHistory")
-      const { status, data } = await axios.get(`${API}/api/history/${urlId}`)
-
-      if (status === 200) {
-        dispatch({
-          type: "LOAD_HISTORY",
-          payload: data.history.historyItems,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      const { status, data } = error.response
-      if (status !== 200) {
-        setError(data.message)
-      }
-    }
-  }
-  const getLiked = async (urlId) => {
-    try {
-      const { status, data } = await axios.get(`${API}/api/liked/${urlId}`)
-
-      if (status === 200) {
-        dispatch({
-          type: "LOAD_LIKED",
-          payload: data.liked.likedItems,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      const { status, data } = error.response
-      if (status !== 200) {
-        setError(data.message)
-      }
-    }
-  }
-  // getSaved
-  const getSaved = async (urlId) => {
-    try {
-      const { status, data } = await axios.get(`${API}/api/saved/${urlId}`)
-
-      if (status === 200) {
-        dispatch({
-          type: "LOAD_SAVED",
-          payload: data.saved.savedItems,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      const { status, data } = error.response
-      if (status !== 200) {
-        setError(data.message)
-      }
-    }
-  }
-  // getPlaylist
-  const getPlaylist = async (urlId) => {
-    try {
-      const { status, data } = await axios.get(`${API}/api/playlist/${urlId}`)
-
-      if (status === 200) {
-        playlistDispatch({
-          type: "LOAD_PLAYLIST",
-          payload: data.playlist,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      const { status, data } = error.response
-      if (status !== 200) {
-        setError(data.message)
-      }
-    }
-  }
-
-  useEffect(() => {
-    if (user?.isLoggedIn && user?.userData?.userId) {
-      console.log(user, user.userData.userId, "from login useEffect")
-      getHistory(user.userData.userId)
-    }
-  }, [user.isLoggedIn])
-  useEffect(() => {
-    if (user?.isLoggedIn && user?.userData?.userId) {
-      console.log(user, user.userData.userId, "from login useEffect")
-      getLiked(user.userData.userId)
-    }
-  }, [user.isLoggedIn])
-  useEffect(() => {
-    if (user?.isLoggedIn && user?.userData?.userId) {
-      console.log(user, user.userData.userId, "from login useEffect")
-      getSaved(user.userData.userId)
-    }
-  }, [user.isLoggedIn])
-  useEffect(() => {
-    if (user?.isLoggedIn && user?.userData?.userId) {
-      console.log(user, user.userData.userId, "from login useEffect")
-      getPlaylist(user.userData.userId)
-    }
-  }, [user.isLoggedIn])
 
   return (
     <div className="login">

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt"
@@ -13,21 +13,37 @@ import axios from "axios"
 import { Modal } from "Pages/Playlists/Modal/Modal"
 import { API } from "Utils/API"
 import { useAuth } from "Context/authContext"
+import { setupAuthHeaderForServiceCalls } from "Context/authContext"
 export const isAlreadyExist = (arr, id) => {
   return arr.find(({ video }) => video._id.toString() === id.toString())
     ? true
     : false
+}
+const currentVideoFind = (videos, id) => {
+  return videos.find((video) => video._id == id)
 }
 export const SingleVideo = () => {
   const { state, dispatch } = useStateContext()
   const { id } = useParams()
   const { user } = useAuth()
   const navigate = useNavigate()
-  const currentVideoFind = (videos, id) => {
-    return videos.find((video) => video.youtubeId == id)
-  }
+  const [video, setVideo] = useState(currentVideoFind(state.videos, id))
 
-  const currentVideo = currentVideoFind(state.videos, id)
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data, status } = await axios.get(`${API}/api/videos/${id}`)
+        if (status === 200) {
+          setVideo(data.video)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetch()
+  }, [id])
+  const currentVideo = video
+
   console.log(currentVideo, "currentVideo after render")
   const handleLikeButton = (payload, dispatch, navigate) => {
     if (user.isLoggedIn) {
@@ -64,9 +80,9 @@ export const SingleVideo = () => {
   const addToLiked = async () => {
     try {
       if (user.isLoggedIn) {
-        const { status, data } = await axios.post(
-          `${API}/api/liked/${user.userData.userId}/${currentVideo._id}`,
-          {}
+        const { status } = await axios.post(
+          `${API}/api/liked/${currentVideo._id}`,
+          setupAuthHeaderForServiceCalls(user.userData.token)
         )
         if (status === 200) {
           handleLikeButton(currentVideo, dispatch, navigate)
@@ -82,8 +98,8 @@ export const SingleVideo = () => {
     try {
       if (user.isLoggedIn) {
         const { status } = await axios.delete(
-          `${API}/api/liked/${user.userData.userId}/${currentVideo._id}`,
-          {}
+          `${API}/api/liked/${currentVideo._id}`,
+          setupAuthHeaderForServiceCalls(user.userData.token)
         )
         if (status === 200) {
           removeLikeButton(currentVideo, dispatch, navigate)
