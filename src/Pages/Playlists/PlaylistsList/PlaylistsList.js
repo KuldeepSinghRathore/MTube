@@ -9,7 +9,6 @@ import { API } from "Utils/API"
 const PlaylistsList = ({ plObj }) => {
   const { playlistDispatch } = usePlaylist()
   const { user } = useAuth()
-  console.log(plObj, "plObj")
   const { playlistName, playlistItems } = plObj
   const playlistCover =
     playlistItems.length > 0 ? playlistItems[0].video.youtubeId : ""

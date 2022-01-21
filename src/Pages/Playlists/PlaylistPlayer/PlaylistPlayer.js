@@ -4,7 +4,6 @@ import VideoCard from "Pages/VideoPage/Components/VideoCard/VideoCard"
 
 const PlaylistPlayer = () => {
   const { playlistState } = usePlaylist()
-  console.log(playlistState, "playlistState")
   return (
     <>
       {playlistState?.currentPlaylist !== null && (

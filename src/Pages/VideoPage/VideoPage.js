@@ -5,7 +5,6 @@ import { SelectBy } from "Pages/VideoPage/Components/SelectBy/SelectBy"
 import "./VideoPage.css"
 const VideoPage = () => {
   const { state, isLoading } = useStateContext()
-  // console.log(state, "state")
 
   const toDisplay = state.filtered.filter((video) =>
     Object.values(video)
@@ -13,7 +12,6 @@ const VideoPage = () => {
       .toLowerCase()
       .includes(state.searchBy.toLowerCase())
   )
-  console.log(toDisplay, "toDisplay")
   return isLoading ? (
     <div>Loading...</div>
   ) : state.searchBy !== "" && !toDisplay.length > 0 ? (

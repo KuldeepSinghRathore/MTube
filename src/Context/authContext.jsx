@@ -1,8 +1,5 @@
 import axios from "axios"
-import { createContext, useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { usePlaylist } from "./playlistContext"
-import { useStateContext } from "./stateContext"
+import { createContext, useContext, useState } from "react"
 
 export const AuthContext = createContext()
 export function setupAuthHeaderForServiceCalls(token) {

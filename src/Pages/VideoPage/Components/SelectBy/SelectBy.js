@@ -8,7 +8,6 @@ export const SelectBy = () => {
     "All",
     ...new Set(state.videos.map((video) => video.creator)),
   ]
-  console.log(category, "category")
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

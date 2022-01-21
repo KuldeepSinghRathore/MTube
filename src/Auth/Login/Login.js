@@ -10,7 +10,7 @@ const Login = () => {
   const path = useLocation().state
 
   const navigate = useNavigate()
-  const { user, setUser, error, setError } = useAuth()
+  const { user, setUser, error } = useAuth()
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",

@@ -14,7 +14,6 @@ export const Modal = ({ vidObj, useparam }) => {
   const { playlistDispatch, playlistState } = usePlaylist()
   const { user } = useAuth()
   const navigate = useNavigate()
-  console.log(vidObj, "vidObj to get _id of current video")
   const createPlaylist = (playlistName, vidObj) => {
     if (playlistName !== "") {
       const plObj = {
@@ -27,8 +26,6 @@ export const Modal = ({ vidObj, useparam }) => {
       setModal(false)
     }
   }
-  // console.log(inputValue, "inputValue From Name")
-  //   console.log(plObj, "plObj")
 
   const handleCreateAndAddToPlaylist = async (
     playlistName,
@@ -43,7 +40,6 @@ export const Modal = ({ vidObj, useparam }) => {
           },
           data: { playlistName },
         })
-        console.log(status, "status permission to delete")
         if (status === 200) {
           createPlaylist(playlistName, vidObj)
           toast.success(`Video Added To ${playlistName}`, {
@@ -64,7 +60,6 @@ export const Modal = ({ vidObj, useparam }) => {
     }
   }
   const handleRemoveFromPlaylist = async (playlistName, videoId) => {
-    console.log(playlistName, videoId, "playlistName, videoId")
     try {
       if (user.userData.token && playlistName !== "" && videoId !== "") {
         const { status } = await axios.delete(

@@ -14,10 +14,9 @@ export const StateContext = createContext()
 
 export const StateProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const { user, setUser, error, setError } = useAuth()
-  const { token, userId } = user?.userData
-  console.log(token, userId, "token and userId")
-  console.log(isLoading, "isLoading")
+  const { user } = useAuth()
+  const { token } = user?.userData
+
   const getAllVideos = async () => {
     const { data, status } = await axios.get(`${API}/api/videos`)
 
@@ -30,7 +29,6 @@ export const StateProvider = ({ children }) => {
     }
   }
   useEffect(() => {
-    console.log("useEffect of videos loading")
     setIsLoading(true)
     try {
       getAllVideos()
@@ -58,10 +56,6 @@ export const StateProvider = ({ children }) => {
           }
         } catch (error) {
           console.log(error)
-          const { status, data } = error.response
-          if (status !== 200) {
-            setError(data.message)
-          }
         }
       }
       getHistory(token)
@@ -85,14 +79,9 @@ export const StateProvider = ({ children }) => {
         }
       } catch (error) {
         console.log(error)
-        const { status, data } = error.response
-        if (status !== 200) {
-          setError(data.message)
-        }
       }
     }
     if (token) {
-      console.log("getLiked", token)
       getLiked(token)
     }
   }, [token])
@@ -115,10 +104,6 @@ export const StateProvider = ({ children }) => {
         }
       } catch (error) {
         console.log(error)
-        const { status, data } = error.response
-        if (status !== 200) {
-          setError(data.message)
-        }
       }
     }
     if (token) {

@@ -45,7 +45,6 @@ export const SingleVideo = () => {
   }, [id])
   const currentVideo = video
 
-  console.log(currentVideo, "currentVideo after render")
   const handleLikeButton = (payload, dispatch, navigate) => {
     if (user.isLoggedIn) {
       dispatch({ type: "ADD_TO_LIKED", payload })
@@ -76,7 +75,6 @@ export const SingleVideo = () => {
   }
 
   const isLiked = isAlreadyExist(state.liked, currentVideo?._id)
-  // console.log(isAlreadyExist(state.liked, currentVideo?._id), "isAlreadyExist")
   const isSaved = isAlreadyExist(state.saved, currentVideo?._id)
   const addToLiked = async () => {
     try {

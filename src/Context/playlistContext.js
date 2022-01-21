@@ -7,8 +7,8 @@ import { useAuth } from "./authContext"
 export const PlaylistContext = createContext()
 
 export const PlaylistProvider = ({ children }) => {
-  const { user, setUser, error, setError } = useAuth()
-  const { token, userId } = user?.userData
+  const { user } = useAuth()
+  const { token } = user?.userData
   useEffect(() => {
     //   // getPlaylist
     const getPlaylist = async (token) => {
@@ -27,10 +27,6 @@ export const PlaylistProvider = ({ children }) => {
         }
       } catch (error) {
         console.log(error)
-        const { status, data } = error.response
-        if (status !== 200) {
-          setError(data.message)
-        }
       }
     }
     if (token) {

@@ -1,5 +1,4 @@
 import React from "react"
-import { useNavigate } from "react-router-dom"
 import { usePlaylist } from "Context/playlistContext"
 import "./Playlists.css"
 import PlaylistsList from "./PlaylistsList/PlaylistsList"

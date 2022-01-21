@@ -16,7 +16,6 @@ export const SignUp = () => {
   })
   const [error, setError] = useState("")
   const [confirmPass, setConfirmPass] = useState("")
-  console.log(signUpDetails)
   const handleChange = (e) => {
     setSignUpDetails({
       ...signUpDetails,

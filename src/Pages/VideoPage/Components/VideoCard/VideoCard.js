@@ -20,12 +20,11 @@ const VideoCard = ({ videoObj }) => {
   const addToHistory = async () => {
     try {
       if (user.isLoggedIn) {
-        const { data, status } = await axios.post(
+        const { status } = await axios.post(
           `${API}/api/history/${videoObj._id}`,
           setupAuthHeaderForServiceCalls(user.userData.token)
         )
         if (status === 200) {
-          console.log(data, "l27")
           clickButtonHandler(videoObj, dispatch, navigate)
         }
       } else {
@@ -35,19 +34,16 @@ const VideoCard = ({ videoObj }) => {
       console.log(error)
     }
   }
-  // console.log(user, "user", videoObj, "videoObj", "for histor")
   return (
     <div
       className="videoCard"
       onClick={() => {
-        // clickButtonHandler(videoObj, dispatch, navigate)
         addToHistory()
       }}
     >
       <img
         className="videoCard__thumbnail"
-        // src={`http://i3.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`}
-        src={`http://i3.ytimg.com/vi/${youtubeId}/sddefault.jpg`}
+        src={`https://i3.ytimg.com/vi/${youtubeId}/sddefault.jpg`}
         alt=""
       />
       <h4>{title}</h4>

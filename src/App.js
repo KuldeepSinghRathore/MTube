@@ -1,5 +1,5 @@
 import "./App.css"
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import { Header } from "Components/Header/Header"
 import { Sidebar } from "Components/Sidebar/Sidebar"
 import VideoPage from "Pages/VideoPage/VideoPage"
@@ -34,7 +34,6 @@ function App() {
     return <Loader />
   }
 
-  console.log(path)
   return (
     <div className="app">
       <ToastContainer />
