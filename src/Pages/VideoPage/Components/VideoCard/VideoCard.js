@@ -9,7 +9,7 @@ import { setupAuthHeaderForServiceCalls } from "Context/authContext"
 const VideoCard = ({ videoObj }) => {
   const { title, creator, views, youtubeId } = videoObj
   const navigate = useNavigate()
-  const { state, dispatch } = useStateContext()
+  const { dispatch } = useStateContext()
   const { user } = useAuth()
   const clickButtonHandler = (payload, dispatch, navigate, navigateTo) => {
     dispatch({ type: "ADD_TO_HISTORY", payload })

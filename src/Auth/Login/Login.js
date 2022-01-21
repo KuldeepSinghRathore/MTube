@@ -1,15 +1,12 @@
-import { height, width } from "@mui/system"
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../../Context/authContext"
-import { usePlaylist } from "../../Context/playlistContext"
-import { useStateContext } from "../../Context/stateContext"
 import { API } from "../../Utils/API"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import "./Login.css"
 const Login = () => {
-  const { dispatch } = useStateContext()
-  const { playlistDispatch } = usePlaylist()
   const path = useLocation().state
 
   const navigate = useNavigate()
@@ -18,7 +15,6 @@ const Login = () => {
     email: "",
     password: "",
   })
-
   const handleChange = (e) => {
     setLoginDetails({
       ...loginDetails,
@@ -29,7 +25,7 @@ const Login = () => {
     e.preventDefault()
 
     try {
-      if (loginDetails.email && loginDetails.password) {
+      if (loginDetails?.email && loginDetails?.password) {
         const { data, status } = await axios.post(
           `${API}/user/login`,
           loginDetails
@@ -38,21 +34,19 @@ const Login = () => {
         if (status === 200) {
           localStorage.setItem(
             "authToken",
-            JSON.stringify({ isLoggedIn: true, userData: data.userData })
+            JSON.stringify({ isLoggedIn: true, userData: data?.userData })
           )
-          setUser({ ...user, isLoggedIn: true, userData: data.userData })
-
-          navigate("/")
+          setUser({ ...user, isLoggedIn: true, userData: data?.userData })
+          toast.success("Login Successful")
+          navigate(path === null ? "/" : path?.from)
         } else {
-          navigate(path === null ? "/login" : path.from)
+          navigate(path === null ? "/login" : path?.from)
         }
       }
     } catch (error) {
       console.log(error)
-      const { status, data } = error.response
-      if (status !== 200) {
-        setError(data.message)
-      }
+
+      // setError(error.response.data.message)
     }
   }
 

@@ -1,5 +1,5 @@
 import "./App.css"
-import { Route, Routes, useLocation } from "react-router-dom"
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import { Header } from "Components/Header/Header"
 import { Sidebar } from "Components/Sidebar/Sidebar"
 import VideoPage from "Pages/VideoPage/VideoPage"
@@ -18,11 +18,15 @@ import { BottomNavBar } from "Components/Header/Components/BottomNavBar/BottomNa
 import { useStateContext } from "Context/stateContext"
 import { Loader } from "Components/Loader/Loader"
 import { useEffect } from "react"
+import { PrivateRoutes } from "Auth/PrivateRoutes"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   const path = useLocation().pathname
   const { isLoading } = useStateContext()
   const location = useLocation()
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location])
@@ -33,23 +37,88 @@ function App() {
   console.log(path)
   return (
     <div className="app">
+      <ToastContainer />
       <Header />
 
       <div className="app_page">
         {path !== "/signup" && path !== "/login" && <Sidebar />}
         <Routes>
           <Route path="/" element={<VideoPage />} />
-          <Route path="/history" element={<HistoryPage />} />
-          <Route path="/liked" element={<LikedPage />} />
-          <Route path="/playlists" element={<Playlists />} />
-          <Route path="/playlist" element={<PlaylistPlayer />} />
+          <Route
+            path="/history"
+            element={
+              <PrivateRoutes>
+                {" "}
+                <HistoryPage />{" "}
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/liked"
+            element={
+              <PrivateRoutes>
+                {" "}
+                <LikedPage />{" "}
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/playlists"
+            element={
+              <PrivateRoutes>
+                {" "}
+                <Playlists />{" "}
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/playlist"
+            element={
+              <PrivateRoutes>
+                {" "}
+                <PlaylistPlayer />
+              </PrivateRoutes>
+            }
+          />
           <Route path="/video/:id" element={<SingleVideo />} />
-          <Route path="library" element={<Library />} />
+          <Route
+            path="library"
+            element={
+              <PrivateRoutes>
+                {" "}
+                <Library />{" "}
+              </PrivateRoutes>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/liked" element={<LikedPage />} />
-          <Route path="/saved" element={<SavedPage />} />
-          <Route path="/user" element={<User />} />
+          <Route
+            path="/liked"
+            element={
+              <PrivateRoutes>
+                {" "}
+                <LikedPage />{" "}
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/saved"
+            element={
+              <PrivateRoutes>
+                {" "}
+                <SavedPage />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/user"
+            element={
+              <PrivateRoutes>
+                {" "}
+                <User />
+              </PrivateRoutes>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

@@ -6,8 +6,7 @@ import { usePlaylist } from "Context/playlistContext"
 import { useStateContext } from "Context/stateContext"
 import { API } from "Utils/API"
 import "./Modal.css"
-import { setupAuthHeaderForServiceCalls } from "Context/authContext"
-
+import { toast } from "react-toastify"
 export const Modal = ({ vidObj, useparam }) => {
   const [modal, setModal] = useState(false)
   const [inputValue, setInputValue] = useState("")
@@ -24,6 +23,7 @@ export const Modal = ({ vidObj, useparam }) => {
       }
 
       playlistDispatch({ type: "ADD_TO_PLAYLIST", payload: plObj })
+
       setModal(false)
     }
   }
@@ -46,6 +46,15 @@ export const Modal = ({ vidObj, useparam }) => {
         console.log(status, "status permission to delete")
         if (status === 200) {
           createPlaylist(playlistName, vidObj)
+          toast.success(`Video Added To ${playlistName}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
         }
       } else {
         navigate("/login")
@@ -75,6 +84,15 @@ export const Modal = ({ vidObj, useparam }) => {
               playlistName: playlistName,
               vid: videoId,
             },
+          })
+          toast.success(`Video Removed From ${playlistName}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
           })
         }
       } else {
@@ -108,13 +126,10 @@ export const Modal = ({ vidObj, useparam }) => {
               <div className="middle">
                 {playlistState?.playlist.map((playlistObj, idx) => {
                   const isChecked = playlistObj?.playlistItems?.findIndex(
-                    (check) => check?.video?._id == useparam
+                    (check) =>
+                      check?.video?._id.toString() === useparam.toString()
                   )
-                  console.log(
-                    isChecked,
-                    vidObj?._id,
-                    "isChecked and vidObj._id"
-                  )
+
                   return (
                     <label key={idx.toString()}>
                       <input

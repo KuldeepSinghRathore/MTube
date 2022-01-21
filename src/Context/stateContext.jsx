@@ -159,7 +159,8 @@ export const StateProvider = ({ children }) => {
         return {
           ...state,
           liked: state.liked.filter(
-            (video) => video.video._id != action.payload._id
+            (video) =>
+              video.video._id.toString() !== action.payload._id.toString()
           ),
         }
 

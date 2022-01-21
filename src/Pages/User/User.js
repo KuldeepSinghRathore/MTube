@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "Context/authContext"
 import { useStateContext } from "Context/stateContext"
 import "./User.css"
+import { usePlaylist } from "Context/playlistContext"
 const User = () => {
   const { user, setUser } = useAuth()
   const navigate = useNavigate()
   const { dispatch } = useStateContext()
+  const { playlistDispatch } = usePlaylist()
   const logout = () => {
-    localStorage.clear()
+    localStorage.removeItem("authToken")
     setUser({ isLoggedIn: false, userData: {} })
     dispatch({ type: "LOGOUT" })
+    playlistDispatch({ type: "LOGOUT" })
     navigate("/")
   }
   return (

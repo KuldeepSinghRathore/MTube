@@ -1,5 +1,8 @@
 import axios from "axios"
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { usePlaylist } from "./playlistContext"
+import { useStateContext } from "./stateContext"
 
 export const AuthContext = createContext()
 export function setupAuthHeaderForServiceCalls(token) {
@@ -8,6 +11,21 @@ export function setupAuthHeaderForServiceCalls(token) {
   }
   delete axios.defaults.headers.common["Authorization"]
 }
+
+export function setupAuthExceptionHandler(logoutUser) {
+  const UNAUTHORIZED = 401
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error?.response?.status === UNAUTHORIZED) {
+        logoutUser()
+        window.location = "/login"
+      }
+      return Promise.reject(error)
+    }
+  )
+}
+
 export const AuthProvider = ({ children }) => {
   const { isLoggedIn: savedLogin, userData: savedUserData } = JSON.parse(
     localStorage.getItem("authToken")
@@ -19,6 +37,13 @@ export const AuthProvider = ({ children }) => {
     isLoggedIn: savedLogin,
     userData: savedUserData,
   })
+
+  const logoutUser = () => {
+    localStorage.removeItem("authToken")
+    setUser({ isLoggedIn: false, userData: {} })
+  }
+
+  setupAuthExceptionHandler(logoutUser)
   const [error, setError] = useState("")
   const values = { user, setUser, error, setError }
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>

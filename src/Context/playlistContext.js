@@ -83,7 +83,9 @@ export const PlaylistProvider = ({ children }) => {
               ? (item = {
                   ...item,
                   playlistItems: item.playlistItems.filter(
-                    (item) => item.video._id != action.payload.vid
+                    (item) =>
+                      item.video._id.toString() !==
+                      action.payload.vid.toString()
                   ),
                 })
               : item
@@ -96,6 +98,12 @@ export const PlaylistProvider = ({ children }) => {
           playlist: state.playlist.filter(
             (pl) => pl.playlistName !== action.payload
           ),
+        }
+
+      case "LOGOUT":
+        return {
+          playlist: [],
+          currentPlaylist: null,
         }
       default:
         return state

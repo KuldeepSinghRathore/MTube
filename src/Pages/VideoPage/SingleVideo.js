@@ -14,13 +14,14 @@ import { Modal } from "Pages/Playlists/Modal/Modal"
 import { API } from "Utils/API"
 import { useAuth } from "Context/authContext"
 import { setupAuthHeaderForServiceCalls } from "Context/authContext"
+import { toast } from "react-toastify"
 export const isAlreadyExist = (arr, id) => {
   return arr.find(({ video }) => video._id.toString() === id.toString())
     ? true
     : false
 }
 const currentVideoFind = (videos, id) => {
-  return videos.find((video) => video._id == id)
+  return videos.find((video) => video._id.toString() === id.toString())
 }
 export const SingleVideo = () => {
   const { state, dispatch } = useStateContext()
@@ -86,6 +87,15 @@ export const SingleVideo = () => {
         )
         if (status === 200) {
           handleLikeButton(currentVideo, dispatch, navigate)
+          toast.success(`Added To Liked`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
         }
       } else {
         navigate("/login")
@@ -103,6 +113,15 @@ export const SingleVideo = () => {
         )
         if (status === 200) {
           removeLikeButton(currentVideo, dispatch, navigate)
+          toast.success(`Remove From Liked`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
         }
       } else {
         navigate("/login")
@@ -120,6 +139,15 @@ export const SingleVideo = () => {
         )
         if (status === 200) {
           handleSavedButton(currentVideo, dispatch, navigate)
+          toast.success(`Added To Saved`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
         }
       } else {
         navigate("/login")
@@ -137,6 +165,15 @@ export const SingleVideo = () => {
         )
         if (status === 200) {
           removeSavedButton(currentVideo, dispatch, navigate)
+          toast.success(`Removed from Saved`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
         }
       } else {
         navigate("/login")
