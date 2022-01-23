@@ -1,6 +1,6 @@
 # MoonTube
 
-An Video Library App built with React ⚛
+A Video Library App built with React ⚛
 
 ### Preview
 Deployed app: [https://moontube.netlify.app/](https://moontube.netlify.app/)
