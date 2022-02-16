@@ -11,9 +11,10 @@ const Login = () => {
 
   const navigate = useNavigate()
   const { user, setUser, error } = useAuth()
+  const [loggingIn, setLoggingIn] = useState(false)
   const [loginDetails, setLoginDetails] = useState({
-    email: "",
-    password: "",
+    email: "guest@test.com",
+    password: "asdfasdf",
   })
   const handleChange = (e) => {
     setLoginDetails({
@@ -26,6 +27,7 @@ const Login = () => {
 
     try {
       if (loginDetails?.email && loginDetails?.password) {
+        setLoggingIn(true)
         const { data, status } = await axios.post(
           `${API}/user/login`,
           loginDetails
@@ -37,6 +39,7 @@ const Login = () => {
             JSON.stringify({ isLoggedIn: true, userData: data?.userData })
           )
           setUser({ ...user, isLoggedIn: true, userData: data?.userData })
+          setLoggingIn(false)
           toast.success("Login Successful")
           navigate(path === null ? "/" : path?.from)
         } else {
@@ -73,7 +76,10 @@ const Login = () => {
         <p>
           new user ? <Link to="/signup">Signup</Link>
         </p>
-        <input type="submit" value="Login" />
+        <input
+          type="submit"
+          value={`${loggingIn ? "Logging In..." : "Login"}`}
+        />
       </form>
     </div>
   )

@@ -10,7 +10,7 @@ Deployed app: [https://moontube.netlify.app/](https://moontube.netlify.app/)
     
 
 
-Backend source code (Express & Mongoose): [https://github.com/KuldeepSinghRathore/MoonTube](https://github.com/KuldeepSinghRathore/MoonTube)
+**Backend source code (Express & Mongoose):** [https://github.com/KuldeepSinghRathore/MoonTube](https://github.com/KuldeepSinghRathore/MoonTube)
 
 ### Features:
 1. Local storage persistence of auth state

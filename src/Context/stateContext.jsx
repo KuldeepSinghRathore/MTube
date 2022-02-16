@@ -134,12 +134,16 @@ export const StateProvider = ({ children }) => {
       case "SEARCH_BY":
         return { ...state, searchBy: action.payload }
       case "ADD_TO_HISTORY":
+        const historyFiltered = state.history.filter(
+          (video) => video.video._id !== action.payload._id
+        )
+
         return {
           ...state,
-          history: [...state.history, { video: action.payload }],
+          history: [{ video: action.payload }, ...historyFiltered],
         }
       case "ADD_TO_LIKED":
-        return { ...state, liked: [...state.liked, { video: action.payload }] }
+        return { ...state, liked: [{ video: action.payload }, ...state.liked] }
       case "REMOVE_FROM_LIKED":
         return {
           ...state,
@@ -152,7 +156,7 @@ export const StateProvider = ({ children }) => {
       case "ADD_TO_SAVED":
         return {
           ...state,
-          saved: [...state.saved, { video: action.payload }],
+          saved: [{ video: action.payload }, ...state.saved],
         }
       case "REMOVE_FROM_SAVED":
         return {
