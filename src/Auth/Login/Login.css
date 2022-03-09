@@ -29,7 +29,7 @@
 }
 
 
-.login__form input[type="submit"]{
+.login__form input[type="submit"],.guest-login{
  cursor: pointer;
     background: #fd4545;
     color: #fff;
@@ -38,4 +38,9 @@
     font-weight: bold;
     border: none;
     border-radius: 5px;
+    text-align: center;
+}
+.login-error{
+    margin-bottom: 10px;
+    color: red;
 }
