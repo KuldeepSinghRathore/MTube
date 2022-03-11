@@ -15,7 +15,16 @@ const VideoPage = () => {
   return isLoading ? (
     <div>Loading...</div>
   ) : state.searchBy !== "" && !toDisplay.length > 0 ? (
-    <h2>Nothin Match the Search Term</h2>
+    <h2
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flex: "0.8",
+        padding: "25px",
+      }}
+    >
+      Nothin Match the Search Term
+    </h2>
   ) : (
     <>
       <SelectBy />

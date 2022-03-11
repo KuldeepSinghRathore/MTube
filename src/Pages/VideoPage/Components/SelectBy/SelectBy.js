@@ -22,7 +22,6 @@ export const SelectBy = () => {
           className="selectBy__tag"
           onClick={() => {
             dispatch({ type: "FILTER_BY", payload: creator })
-            // dispatch({ type: "SELECT_BY", payload: creator })
             scrollToTop()
           }}
         >

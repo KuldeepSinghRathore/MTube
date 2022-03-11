@@ -20,8 +20,6 @@ export const StateProvider = ({ children }) => {
   const getAllVideos = async () => {
     const { data, status } = await axios.get(`${API}/api/videos`)
 
-    console.log(data, "data")
-
     if (status === 200) {
       dispatch({ type: "LOAD_VIDEOS", payload: data.videos })
       dispatch({ type: "FILTER_BY", payload: "All" })

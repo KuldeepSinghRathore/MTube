@@ -85,6 +85,7 @@
   justify-content: space-evenly;
   align-items: center;
   padding: 5px;
+  cursor: pointer;
 }
 .middle {
   display: flex;

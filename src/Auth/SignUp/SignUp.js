@@ -1,6 +1,7 @@
 import axios from "axios"
 import React, { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { useAuth } from "../../Context/authContext"
 import { API } from "../../Utils/API"
 import "./SignUp.css"
@@ -14,8 +15,15 @@ export const SignUp = () => {
     email: "",
     password: "",
   })
+  const [formError, setFormError] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  })
   const [error, setError] = useState("")
   const [confirmPass, setConfirmPass] = useState("")
+  const [isSigning, setSigningUp] = useState(false)
   const handleChange = (e) => {
     setSignUpDetails({
       ...signUpDetails,
@@ -23,10 +31,28 @@ export const SignUp = () => {
     })
   }
   const signUpHandler = async (e) => {
+    e.preventDefault()
+    const errorObj = {}
+    const { firstName, lastName, email, password } = signUpDetails
+    if (firstName?.length === 0) {
+      errorObj.firstName = "firstName is required"
+    }
+    if (lastName?.length === 0) {
+      errorObj.lastName = "lastName is required"
+    }
+    if (email?.length === 0) {
+      errorObj.email = "Email is required"
+    }
+    if (password?.length === 0) {
+      errorObj.password = "Password is required"
+    }
+    if (confirmPass?.length === 0) {
+      errorObj.confirmPass = "Re-Type Password is required"
+    }
+    setFormError(errorObj)
     try {
-      e.preventDefault()
-      const { firstName, lastName, email, password } = signUpDetails
       if (firstName && lastName && email && password) {
+        setSigningUp(true)
         const { status, data } = await axios.post(
           `${API}/user/signup`,
           signUpDetails
@@ -36,11 +62,11 @@ export const SignUp = () => {
             "authToken",
             JSON.stringify({ isLoggedIn: true, userData: data.userData })
           )
-          setUser({ ...user, isLoggedIn: true, userData: data.userData })
 
-          navigate("/")
-        } else {
-          navigate(path === null ? "/login" : path.from)
+          setUser({ ...user, isLoggedIn: true, userData: data?.userData })
+          toast.success("SignUp Successful")
+
+          navigate(path === null ? "/" : path?.from)
         }
       }
     } catch (error) {
@@ -64,6 +90,10 @@ export const SignUp = () => {
             value={signUpDetails.firstName}
             onChange={handleChange}
           />
+          {formError?.firstName?.length > 0 &&
+            signUpDetails.firstName?.length === 0 && (
+              <p className="signup-error">{formError.firstName}</p>
+            )}
           <label>LastName:</label>
           <input
             type="text"
@@ -71,6 +101,10 @@ export const SignUp = () => {
             value={signUpDetails.lastName}
             onChange={handleChange}
           />
+          {formError?.lastName?.length > 0 &&
+            signUpDetails?.lastName?.length === 0 && (
+              <p className="signup-error">{formError.lastName}</p>
+            )}
           <label>Email:</label>
           <input
             type="email"
@@ -78,6 +112,10 @@ export const SignUp = () => {
             value={signUpDetails.email}
             onChange={handleChange}
           />
+          {formError?.email?.length > 0 &&
+            signUpDetails?.email?.length === 0 && (
+              <p className="signup-error">{formError.email}</p>
+            )}
           <label>Password:</label>
           <input
             type="password"
@@ -86,6 +124,10 @@ export const SignUp = () => {
             value={signUpDetails.password}
             onChange={handleChange}
           />
+          {formError?.password?.length > 0 &&
+            signUpDetails?.password?.length === 0 && (
+              <p className="signup-error">{formError.password}</p>
+            )}
           <label>Confirm Password:</label>
           <input
             type="password"
@@ -95,11 +137,14 @@ export const SignUp = () => {
             onChange={(e) => setConfirmPass(e.target.value)}
           />
 
-          <input
-            type="submit"
-            value="SignUp"
-            disabled={signUpDetails.password !== confirmPass}
-          />
+          {signUpDetails.password === confirmPass ? (
+            <input
+              type="submit"
+              value={isSigning ? "SigningUp..." : "SignUp"}
+            />
+          ) : (
+            <input type="button" className="disabled-input" />
+          )}
         </form>
       </div>
     </div>

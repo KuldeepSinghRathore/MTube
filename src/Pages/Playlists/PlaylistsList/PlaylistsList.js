@@ -6,6 +6,7 @@ import { usePlaylist } from "Context/playlistContext"
 import { useAuth } from "Context/authContext"
 import axios from "axios"
 import { API } from "Utils/API"
+import { toast } from "react-toastify"
 const PlaylistsList = ({ plObj }) => {
   const { playlistDispatch } = usePlaylist()
   const { user } = useAuth()
@@ -23,15 +24,15 @@ const PlaylistsList = ({ plObj }) => {
   const handleDeletePlaylist = async () => {
     try {
       if (user.isLoggedIn) {
-        const { status } = await axios.delete(
-          `${API}/api/playlist/${user.userData.userId}`,
-          { data: { playlistName } }
-        )
+        const { status } = await axios.delete(`${API}/api/playlist/`, {
+          data: { playlistName },
+        })
         if (status === 200) {
           playlistDispatch({
             type: "DELETE_PLAYLIST",
             payload: playlistName,
           })
+          toast.success("Playlist Deleted Successfully")
         }
       } else {
         navigate("/login")
